@@ -1,0 +1,20 @@
+{
+    "server" : {
+        "port" : "$PORT",
+        "logLevel": "info"
+    },
+    "maxPaginationSize":"20",
+    "environment":"$ENVIRONMENT",
+    "emailProvider":{
+        "senderEmail":"$SENDER_EMAIL",
+        "senderPassword":"$SENDER_PASSWORD"
+    },
+    "mongodb" : {
+        "baseURL" : "$BASE_URL",
+        "dbName" : "$DB_NAME",
+        "debug" : "false",
+        "username" : "$MONGODB_USER",
+        "password" : "$MONGODB_PASSWORD",
+        "poolSize" : 10
+    }
+}

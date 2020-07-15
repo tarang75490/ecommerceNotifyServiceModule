@@ -17,9 +17,13 @@
     "fastify": "^3.0.2",
     "fastify-axios": "^1.1.2",
     "fastify-swagger": "^3.1.2",
+    "handlebars": "^4.7.6",
+    "hbs": "^4.1.1",
     "mongoose": "^5.9.24",
+    "nexmo": "^2.8.0",
     "nodemailer": "^6.4.10",
-    "schema": "^0.2.1"
+    "schema": "^0.2.1",
+    "telesignsdk": "^2.2.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.4"

@@ -42,11 +42,11 @@ class EmailProvider {
             to: receiver.userName+" <"+receiver.email+">",
             subject: this.emailRequest.subject,
             html: result,            
-            // attachments:[{
-            //     filename: 'heart_icon.jpg',
-            //     path: __dirname +'/heart_icon.jpg',
-            //     cid: 'unique@nodemailer.com' //same cid value as in the html img src
-            // }],
+            attachments:[{
+                filename: 'heart_icon.jpg',
+                path: __dirname +'/heart_icon.jpg',
+                cid: 'unique@nodemailer.com' //same cid value as in the html img src
+            }],
         };
         return smptMailer(options,message)
 

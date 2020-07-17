@@ -58,7 +58,8 @@ exports.verifyOTP = async (req,res) => {
                console.log(response,123)
                return res.status(200).send({
                    status: 'success',
-                   data: response
+                   data: response,
+                   message:"Verified Successfully"
                })
            }
        })

@@ -19,13 +19,13 @@ const routes = [
         schema: documentation.sendOTPBySMS,
         preValidation: validators.validateSendOTPBySmsRequest
     },
-    {
-        method:"POST",
-        url:"/verifyOTP",
-        handler: controllers.verifyOTP,
-        schema: documentation.verifyOTP,
-        preValidation: validators.validateVerifyOTP
-    }
+    // {
+    //     method:"POST",
+    //     url:"/verifyOTP",
+    //     handler: controllers.verifyOTP,
+    //     schema: documentation.verifyOTP,
+    //     preValidation: validators.validateVerifyOTP
+    // }
 ]
 
 

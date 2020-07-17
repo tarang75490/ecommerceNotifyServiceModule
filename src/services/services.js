@@ -20,7 +20,7 @@ const sendOTPByEmail  =  (fastify, emailRequest,callback) => {
     
         console.log(emailRequest)
         let customerId = emailRequest.customerId
-        fastify.axios.get("http://localhost:3000/getProfile?customerId="+customerId).then(async (content) => {
+        fastify.axios.get("http://localhost:3006/getProfile?customerId="+customerId).then(async (content) => {
                         console.log(content.data)
                         let customerInfo=content.data
                         var otp = generateOTP()
@@ -32,10 +32,11 @@ const sendOTPByEmail  =  (fastify, emailRequest,callback) => {
                             subject:"Email Vertification",
                             otp:(otp).toString()
                         }
-                        fastify.axios.post("http://localhost:3000/updateProfile?customerId="+customerId,{otp:otp}).then(async (content) => {
+                        fastify.axios.post("http://localhost:3006/updateProfile?customerId="+customerId,{otp:otp}).then(async (content) => {
                                     
                                     const emailProvider = new EmailProvider(fastify, emailContent);
                                     const response = await  emailProvider.sendEmail()
+
                                     callback(response)
 
                                 }).catch(error => {
@@ -65,29 +66,29 @@ const sendOTPBySMS = function (fastify, smsRequest) {
     
 }
 
-const verifyOTP = function (fastify,verifyRequest,callback) {
-    console.log(verifyRequest)
-    let customerId = verifyRequest.customerId
-    fastify.axios.get("http://localhost:3000/getProfile?customerId="+customerId).then(async (content) => {
-                    console.log(content.data)
-                    let customerInfo=content.data.data
-                
-                    if(customerInfo.otp !== verifyRequest.otp){
-                        callback(null,"Incorrect OTP")
-                    }else{
-                    fastify.axios.post("http://localhost:3000/updateProfile?customerId="+customerId,{otpVerified:true}).then(async (content) => {
-                                
-                                callback("Verified Successfuly")
+// const verifyOTP = function (fastify,verifyRequest,callback) {
+//     console.log(verifyRequest)
+//     let customerId = verifyRequest.customerId
+//     fastify.axios.get("http://localhost:3006/getProfile?customerId="+customerId).then(async (content) => {
+//                     console.log(content.data)
+//                     let customerInfo= content.data.data
 
-                            }).catch(error => {
-                                 callback(null,error.response.data.message) 
-                        })
-                    }
+//                     if(customerInfo.otp !== verifyRequest.otp){
+//                         callback(null,"Incorrect OTP")
+//                     }else{
+//                     fastify.axios.post("http://localhost:3006/updateProfile?customerId="+customerId,{otpVerified:true}).then(async (content) => {
+//                                 console.log(content)
+//                                 callback(content.data.data)
+
+//                             }).catch(error => {
+//                                  callback(null,error.response.data.message) 
+//                         })
+//                     }
                    
-             }).catch(error => {
-                callback(null,error.response.data.errorCause)
-             })
-}
+//              }).catch(error => {
+//                 callback(null,error.response.data.errorCause)
+//              })
+// }
 
 
 const sendEmail  =  (fastify, emailRequest,callback) => {
@@ -137,5 +138,4 @@ const sendEmail  =  (fastify, emailRequest,callback) => {
 module.exports = {
     sendOTPByEmail,
     sendOTPBySMS,
-    verifyOTP
 }

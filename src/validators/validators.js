@@ -25,14 +25,14 @@ exports.validateSendOTPBySmsRequest = function (req, res, done) {
 
 
 
-exports.validateVerifyOTP = function (req, res, done) {
-    if (!req.body.otp) {
-        res.code(400)
-        done(new HttpError('faliure', 20001, 'OTP is missing'))
-    }else if (!req.body.customerId){
-        res.code(400)
-        done(new HttpError('faliure', 20001, 'Customer Id is missing'))
-    }else{
-        done()
-    }
-}
+// exports.validateVerifyOTP = function (req, res, done) {
+//     if (!req.body.otp) {
+//         res.code(400)
+//         done(new HttpError('faliure', 20001, 'OTP is missing'))
+//     }else if (!req.body.customerId){
+//         res.code(400)
+//         done(new HttpError('faliure', 20001, 'Customer Id is missing'))
+//     }else{
+//         done()
+//     }
+// }

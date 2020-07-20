@@ -5,17 +5,17 @@ const Nexmo = require('nexmo');
 const get = require('./HttpRequest/getContent/getContent')
 const post = require('./HttpRequest/postContent/postContent')
 
-  const generateOTP=() =>{ 
+//   const generateOTP=() =>{ 
           
-        // Declare a digits variable  
-        // which stores all digits 
-        var digits = '0123456789'; 
-        let OTP = ''; 
-        for (let i = 0; i < 4; i++ ) { 
-            OTP += digits[Math.floor(Math.random() * 10)]; 
-        } 
-        return OTP; 
-    } 
+//         // Declare a digits variable  
+//         // which stores all digits 
+//         var digits = '0123456789'; 
+//         let OTP = ''; 
+//         for (let i = 0; i < 4; i++ ) { 
+//             OTP += digits[Math.floor(Math.random() * 10)]; 
+//         } 
+//         return OTP; 
+//     } 
 const sendOTPByEmail  =  (fastify, emailRequest,callback) => {
     
         console.log(emailRequest)
@@ -46,6 +46,32 @@ const sendOTPByEmail  =  (fastify, emailRequest,callback) => {
                  }).catch(error => {
                     callback(null,error.response.data.errorCause)
                  })
+}
+
+const sendMessageByEmail  =  (fastify, emailRequest,callback) => {
+    
+    console.log(emailRequest)
+    let customerId = emailRequest.customerId
+    fastify.axios.get("http://localhost:3006/getProfile?customerId="+customerId).then(async (content) => {
+                    console.log(content.data)
+                    let customerInfo=content.data
+        
+                    var emailContent={
+                        email:customerInfo.data.email,
+                        userName:customerInfo.data.userName,
+                        templateName:emailRequest.templateName,
+                        data:emailRequest.data,
+                        subject:emailRequest.subject,
+                        totalAmount:emailRequest.totalAmount
+                    }
+                    console.log(emailContent)
+                    const emailProvider = new EmailProvider(fastify, emailContent);
+                    const response=   await  emailProvider.sendEmail()
+
+                   callback(response,null)
+             }).catch(error => {
+                callback(null,error.response.data.errorCause)
+             })
 }
 
 
@@ -91,36 +117,36 @@ const sendOTPBySMS = function (fastify, smsRequest) {
 // }
 
 
-const sendEmail  =  (fastify, emailRequest,callback) => {
+// const sendEmail  =  (fastify, emailRequest,callback) => {
     
-    console.log(emailRequest)
-    let customerId = emailRequest.customerId
-    fastify.axios.get("http://localhost:3000/getProfile?customerId="+customerId).then(async (content) => {
-                    console.log(content.data)
-                    let customerInfo=content.data
-                    var otp = generateOTP()
+//     console.log(emailRequest)
+//     let customerId = emailRequest.customerId
+//     fastify.axios.get("http://localhost:3000/getProfile?customerId="+customerId).then(async (content) => {
+//                     console.log(content.data)
+//                     let customerInfo=content.data
+//                     var otp = generateOTP()
         
-                    var emailContent={
-                        email:customerInfo.data.email,
-                        userName:customerInfo.data.userName,
-                        templateName:"otp",
-                        subject:"Email Vertification",
-                        otp:(otp).toString()
-                    }
-                    fastify.axios.post("http://localhost:3000/updateProfile?customerId="+customerId,{otp:otp}).then(async (content) => {
+//                     var emailContent={
+//                         email:customerInfo.data.email,
+//                         userName:customerInfo.data.userName,
+//                         templateName:"otp",
+//                         subject:"Email Vertification",
+//                         otp:(otp).toString()
+//                     }
+//                     fastify.axios.post("http://localhost:3000/updateProfile?customerId="+customerId,{otp:otp}).then(async (content) => {
                                 
-                                const emailProvider = new EmailProvider(fastify, emailContent);
-                                const response = await  emailProvider.sendEmail()
-                                callback(response)
+//                                 const emailProvider = new EmailProvider(fastify, emailContent);
+//                                 const response = await  emailProvider.sendEmail()
+//                                 callback(response)
 
-                            }).catch(error => {
-                                 callback(null,error.response.data.message) 
-                        })
+//                             }).catch(error => {
+//                                  callback(null,error.response.data.message) 
+//                         })
                    
-             }).catch(error => {
-                callback(null,error.response.data.errorCause)
-             })
-}
+//              }).catch(error => {
+//                 callback(null,error.response.data.errorCause)
+//              })
+// }
 
 
 
@@ -137,5 +163,5 @@ const sendEmail  =  (fastify, emailRequest,callback) => {
 
 module.exports = {
     sendOTPByEmail,
-    sendOTPBySMS,
+    sendMessageByEmail
 }

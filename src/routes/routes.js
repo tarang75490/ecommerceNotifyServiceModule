@@ -14,11 +14,18 @@ const routes = [
     },
     {
         method: "POST",
-        url: "/sentOTPbySMS",
-        handler: controllers.sendOTPBySMS,
-        schema: documentation.sendOTPBySMS,
-        preValidation: validators.validateSendOTPBySmsRequest
+        url: "/sentMessagebyEmail",
+        handler: controllers.sendMessageByEmail,
+        schema: documentation.sendMessageByEmail,
+        preValidation: validators.validateSendMessageByEmailRequest
     },
+    // {
+    //     method: "POST",
+    //     url: "/sentOTPbySMS",
+    //     handler: controllers.sendOTPBySMS,
+    //     schema: documentation.sendOTPBySMS,
+    //     preValidation: validators.validateSendOTPBySmsRequest
+    // },
     // {
     //     method:"POST",
     //     url:"/verifyOTP",

@@ -9,7 +9,7 @@ class EmailProvider {
     constructor(fastify, emailRequest) {
         this.fastify = fastify
         this.emailRequest = emailRequest
-        
+        this.templateName = emailRequest.templateName
         const template_content = fs.readFileSync(`${__dirname}/../../templates/email/`+ this.emailRequest.templateName + `.hbs`, 'utf8')
       
         this.htmlContent = template_content
@@ -20,10 +20,30 @@ class EmailProvider {
         const receiver = this.emailRequest
         // console.log(receiver)
         var template = Handlebars.compile(this.htmlContent)
-        var data ={
-            "name":receiver.userName,
-            "otp":receiver.otp
+        var data = null;
+        switch(this.templateName){
+            case "otp":
+                data = {
+                    "name":receiver.userName,
+                    "otp":receiver.otp
+                }
+                break;
+            case "welcome":
+                data = {
+                    "name":receiver.userName,
+                    "otp":receiver.otp
+                }
+                break;
+            case "bill":
+                data = {
+                    "name":receiver.userName,
+                    "data":receiver.data,
+                    "totalAmount":receiver.totalAmount
+                }
+                break;
         }
+
+        
         var result = template(data)
         const options = 
             {

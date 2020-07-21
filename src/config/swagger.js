@@ -15,7 +15,7 @@ exports.options = {
       description: 'Find more info here'
     },
     // host: 'localhost:'+keys.server.port, -----> To Work on local host
-    host:"colossalnotify_service.herokuapp.com",
+    host:"colossalnotify-service.herokuapp.com",
     schemes: ['https'],
     consumes: ['application/json'],
     produces: ['application/json']

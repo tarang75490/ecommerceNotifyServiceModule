@@ -20,7 +20,7 @@ const sendOTPByEmail  =  (fastify, emailRequest,callback) => {
     
         console.log(emailRequest)
         let customerId = emailRequest.customerId
-        fastify.axios.get("http://localhost:3006/getProfile?customerId="+customerId).then(async (content) => {
+        fastify.axios.get("https://colossalcustomer.herokuapp.com/getProfile?customerId="+customerId).then(async (content) => {
                         console.log(content.data)
                         let customerInfo=content.data
                         var otp = generateOTP()
@@ -32,7 +32,7 @@ const sendOTPByEmail  =  (fastify, emailRequest,callback) => {
                             subject:"Email Vertification",
                             otp:(otp).toString()
                         }
-                        fastify.axios.post("http://localhost:3006/updateProfile?customerId="+customerId,{otp:otp}).then(async (content) => {
+                        fastify.axios.post("https://colossalcustomer.herokuapp.com/updateProfile?customerId="+customerId,{otp:otp}).then(async (content) => {
                                     
                                     const emailProvider = new EmailProvider(fastify, emailContent);
                                     const response = await  emailProvider.sendEmail()
@@ -52,7 +52,7 @@ const sendMessageByEmail  =  (fastify, emailRequest,callback) => {
     
     console.log(emailRequest)
     let customerId = emailRequest.customerId
-    fastify.axios.get("http://localhost:3006/getProfile?customerId="+customerId).then(async (content) => {
+    fastify.axios.get("https://colossalcustomer.herokuapp.com/getProfile?customerId="+customerId).then(async (content) => {
                     console.log(content.data)
                     let customerInfo=content.data
         

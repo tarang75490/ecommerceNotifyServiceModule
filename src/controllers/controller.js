@@ -8,7 +8,7 @@ exports.sendOTPByEmail= async (req, res) => {
          service.sendOTPByEmail(req.fastify, req.body,(response,error)=>{
             if(error){
                 return res.status(200).send({
-                    status: 'success',
+                    status: 'failure',
                     data: error
                 })
                  
@@ -23,7 +23,7 @@ exports.sendOTPByEmail= async (req, res) => {
         
     } catch (e) {
         res.code(500)
-        throw new HttpError('faliure', 2001, "Unable to send OTP", e.message)
+        throw new HttpError('failure', 2001, "Unable to send OTP", e.message)
     }
 }
 

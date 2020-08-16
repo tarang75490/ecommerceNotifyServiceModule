@@ -21,7 +21,7 @@ exports.sendOTPByEmail = {
             "properties": {
                 "status": {
                     "type": "string",
-                    "enum": ['failiure', 'success'],
+                    "enum": ['failure', 'success'],
                 },
                 "message": {
                     "type": "string"

@@ -5,22 +5,22 @@ const Nexmo = require('nexmo');
 const get = require('./HttpRequest/getContent/getContent')
 const post = require('./HttpRequest/postContent/postContent')
 
-//   const generateOTP=() =>{ 
+  const generateOTP=() =>{ 
           
-//         // Declare a digits variable  
-//         // which stores all digits 
-//         var digits = '0123456789'; 
-//         let OTP = ''; 
-//         for (let i = 0; i < 4; i++ ) { 
-//             OTP += digits[Math.floor(Math.random() * 10)]; 
-//         } 
-//         return OTP; 
-//     } 
+        // Declare a digits variable  
+        // which stores all digits 
+        var digits = '0123456789'; 
+        let OTP = ''; 
+        for (let i = 0; i < 4; i++ ) { 
+            OTP += digits[Math.floor(Math.random() * 10)]; 
+        } 
+        return OTP; 
+    } 
 const sendOTPByEmail  =  (fastify, emailRequest,callback) => {
     
-        console.log(emailRequest)
+        console.log(emailRequest,123)
         let customerId = emailRequest.customerId
-        fastify.axios.get("https://colossalcustomer.herokuapp.com/getProfile?customerId="+customerId).then(async (content) => {
+        fastify.axios.get("http://localhost:3006/getProfile?customerId="+customerId).then(async (content) => {
                         console.log(content.data)
                         let customerInfo=content.data
                         var otp = generateOTP()
@@ -32,7 +32,8 @@ const sendOTPByEmail  =  (fastify, emailRequest,callback) => {
                             subject:"Email Vertification",
                             otp:(otp).toString()
                         }
-                        fastify.axios.post("https://colossalcustomer.herokuapp.com/updateProfile?customerId="+customerId,{otp:otp}).then(async (content) => {
+                        console.log(emailContent)
+                        fastify.axios.post("http://localhost:3006/updateProfile?customerId="+customerId,{otp:otp}).then(async (content) => {
                                     
                                     const emailProvider = new EmailProvider(fastify, emailContent);
                                     const response = await  emailProvider.sendEmail()
@@ -40,10 +41,12 @@ const sendOTPByEmail  =  (fastify, emailRequest,callback) => {
                                     callback(response)
 
                                 }).catch(error => {
+                                    console.log(error.response)
                                      callback(null,error.response.data.message) 
                             })
                        
                  }).catch(error => {
+                     console.log(error)
                     callback(null,error.response.data.errorCause)
                  })
 }
@@ -52,7 +55,7 @@ const sendMessageByEmail  =  (fastify, emailRequest,callback) => {
     
     console.log(emailRequest)
     let customerId = emailRequest.customerId
-    fastify.axios.get("https://colossalcustomer.herokuapp.com/getProfile?customerId="+customerId).then(async (content) => {
+    fastify.axios.get("http://localhost:3006/getProfile?customerId="+customerId).then(async (content) => {
                     console.log(content.data)
                     let customerInfo=content.data
         

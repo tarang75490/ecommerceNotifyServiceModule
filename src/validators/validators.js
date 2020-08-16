@@ -3,6 +3,7 @@ const HttpError = require('../models/errors/httpError')
 
 
 exports.validateSendOTPByEmailRequest = function (req, res, done) {
+    console.log(req.body)
  if (!req.body.customerId){
         res.code(400)
         done(new HttpError('faliure', 20001, 'Customer Id is missing'))

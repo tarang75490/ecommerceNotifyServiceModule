@@ -14,9 +14,9 @@ exports.options = {
       url: 'https://swagger.io',
       description: 'Find more info here'
     },
-    // host: 'localhost:'+keys.server.port, -----> To Work on local host
+    // host: 'localhost:'+keys.server.port, 
     host:"colossalnotify-service.herokuapp.com",
-    schemes: ['https'],
+    schemes: ['http'],
     consumes: ['application/json'],
     produces: ['application/json']
   }

@@ -18,7 +18,7 @@
     "fastify-axios": "^1.1.2",
     "fastify-cors": "^4.1.0",
     "fastify-swagger": "^3.1.2",
-    "handlebars": "^4.7.6",
+    "handlebars": "^4.7.7",
     "hbs": "^4.1.1",
     "mongoose": "^5.9.24",
     "nexmo": "^2.8.0",
